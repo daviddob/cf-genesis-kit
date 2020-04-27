@@ -19,13 +19,13 @@ params:
   system_domain: (( concat "system." params.base_domain ))
   apps_domains: [ (( concat "run." params.base_domain )) ]
 
-  # BOSH Variables - used to populate ((variables))
-  bosh-variables:
-    system_domain:   (( grab params.system_domain ))
-    deployment_name: (( grab name ))
-    network_name:    (( grab params.network ))
-    cf_core_network:    (( grab params.cf_core_network || params.bosh-variables.network_name ))
-    cf_edge_network:    (( grab params.cf_edge_network || params.bosh-variables.network_name ))
-    cf_runtime_network: (( grab params.cf_runtime_network || params.bosh-variables.network_name ))
+# BOSH Variables - used to populate ((variables))
+bosh-variables:
+  system_domain:   (( grab params.system_domain ))
+  deployment_name: (( grab name ))
+  network_name:    (( grab params.network ))
+  cf_core_network:    (( grab params.cf_core_network || bosh-variables.network_name || params.network ))
+  cf_edge_network:    (( grab params.cf_edge_network || bosh-variables.network_name || params.network ))
+  cf_runtime_network: (( grab params.cf_runtime_network || bosh-variables.network_name || params.network ))
 
 name: (( grab params.name ))
